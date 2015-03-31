@@ -20,7 +20,7 @@
 		initParam: function () {
 
 			this.currentPage = 1;
-			this.flag = false;
+			this.moveLock = false;
 			this.direction = 'up';
 			this.startX = this.startY = 0;
 			this.endX = this.endY = 0;
@@ -57,7 +57,7 @@
 
 			$('.wrap').on('touchmove', function (e) {
 
-				_this.flag = true;
+				_this.moveLock = true;
 
 				var touch = e.touches[0];
 				_this.endX = touch.pageX;
@@ -67,14 +67,14 @@
 
 			$('.wrap').on('touchend', function (e) {
 
-				if(_this.flag) {
+				if(_this.moveLock) {
 					var direction = (_this.endY - _this.startY <= 0) ? 'up' : 'down';
 					var top = parseInt($scroll.css("-webkit-transform").split(",")[1]);
 					
 
 					// 向上滑
 					if(direction === 'up') {
-						if(_this.currentPage < 4) {
+						if(_this.currentPage < 5) {
 							$scroll.css({"-webkit-transform" : "translate3d(0px, " + (top - height) + "px, 0px);"});
 							_this.currentPage++;
 						}
@@ -92,8 +92,12 @@
 					$word3.addClass('word3-move');
 				}
 				
-
+				$('.content5').find('.share').on('click', function () {
+					$('.mask').css('display', 'block');
+				})
 			});
+
+
 		}
 
 	};
